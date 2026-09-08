@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.env
+*.env.local
+
+# Generated output (runtime files)
+output/*.html
+output/*.md
+output/*.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
