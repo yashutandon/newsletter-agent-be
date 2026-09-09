@@ -197,7 +197,9 @@ export async function runNewsletterAgent(
 
   if (interrupted) {
     sessions.set(sessionId, { emitter, config, interrupted: true });
-    emitter.emit("interrupt", { sessionId, ...(interruptData as object) });
+    // LangGraph wraps interrupt payload in { value: <payload>, resumable: true }
+    const payload = (interruptData as { value?: object })?.value ?? interruptData;
+    emitter.emit("interrupt", { sessionId, ...(payload as object) });
     return;
   }
 
@@ -253,7 +255,8 @@ export async function resumeSession(
 
   if (interrupted) {
     sessions.set(sessionId, { ...session, interrupted: true });
-    emitter.emit("interrupt", { sessionId, ...(interruptData as object) });
+    const payload = (interruptData as { value?: object })?.value ?? interruptData;
+    emitter.emit("interrupt", { sessionId, ...(payload as object) });
     return;
   }
 

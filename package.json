@@ -1,10 +1,10 @@
 {
   "name": "newsletter-agent-backend",
   "version": "1.0.0",
-  "description": "Newsletter Agent — Express + LangGraph.js backend",
+  "description": "Newsletter Agent -Express + LangGraph.js backend",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit"
@@ -30,6 +30,7 @@
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.23.13",
     "typescript": "^5.7.2"
   }
 }

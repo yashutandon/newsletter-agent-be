@@ -22,7 +22,7 @@ export type AgentStep =
 export type { ResearchPlan, Article, ArticleSummary, Newsletter, ReviewResult };
 
 /**
- * LangGraph state annotation — defines the shape of state that flows
+ * LangGraph state annotation -defines the shape of state that flows
  * through every node in the graph.
  */
 export const NewsletterStateAnnotation = Annotation.Root({

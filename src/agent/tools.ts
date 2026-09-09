@@ -20,7 +20,7 @@ export async function webSearch(query: string): Promise<Article[]> {
 
 /**
  * Fetch the full text of an article URL.
- * Returns null on any failure — a single bad URL must not crash the workflow.
+ * Returns null on any failure -a single bad URL must not crash the workflow.
  */
 export async function fetchArticle(url: string): Promise<string | null> {
   try {
@@ -59,13 +59,13 @@ export async function fetchArticle(url: string): Promise<string | null> {
     // Normalise whitespace and truncate to 3000 chars to avoid token overflow
     return text.replace(/\s+/g, " ").trim().slice(0, 3000) || null;
   } catch {
-    // Silently discard — the caller will continue without this article's full text
+    // Silently discard -the caller will continue without this article's full text
     return null;
   }
 }
 
 /**
- * Deduplicate articles by URL — preserves first occurrence.
+ * Deduplicate articles by URL -preserves first occurrence.
  */
 export function deduplicateArticles(articles: Article[]): Article[] {
   const seen = new Set<string>();

@@ -52,13 +52,13 @@ Return ONLY a valid JSON object (no markdown fences):
 Selection rules:
 - Prefer the most recent articles.
 - All articles MUST be directly about AI agents, autonomous AI, or closely related topics.
-- Avoid duplicates — each article must cover a distinct development.
+- Avoid duplicates -each article must cover a distinct development.
 - Prioritise credible, well-known sources.
-- Select between 5 and 7 articles — no more, no less.
+- Select between 5 and 7 articles -no more, no less.
 - Keep summaries factual; do not invent details.`;
 
 export function buildSummarizerUser(
-  results: Array<{ title: string; url: string; source: string; publishedAt?: string; snippet?: string }>,
+  results: Array<{ title: string; url: string; source: string; publishedAt?: string | null; snippet?: string | null }>,
   criteria: string[]
 ): string {
   const resultsText = results
@@ -94,7 +94,7 @@ Writing rules:
 - Introduction must hook the reader and reference the main themes.
 - Conclusion must provide a forward-looking insight or call to action.
 - Subject line must be specific and click-worthy (no clickbait).
-- Do NOT repeat or re-summarise articles in the intro/conclusion — those are handled separately.`;
+- Do NOT repeat or re-summarise articles in the intro/conclusion -those are handled separately.`;
 
 export function buildWriterUser(
   goal: string,

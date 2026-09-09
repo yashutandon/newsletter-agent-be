@@ -50,9 +50,24 @@ export async function runAgent(req: Request, res: Response): Promise<void> {
       );
     };
 
-    // Pipe emitter events → SSE
+    // Pipe emitter events → SSE and print to console
     const forwardEvent = (event: string) =>
       emitter.on(event, (data: unknown) => {
+        // Log to backend terminal
+        if (event === "progress") {
+          const d = data as { step: string; message: string };
+          console.log(`[Agent:${sessionId.slice(0, 8)}] [${d.step}] ${d.message}`);
+        } else if (event === "interrupt") {
+          const d = data as { stage: string; message: string };
+          console.log(`[Agent:${sessionId.slice(0, 8)}] ⏸ PAUSED FOR HUMAN REVIEW: ${d.stage} - ${d.message}`);
+        } else if (event === "complete") {
+          const d = data as { status: string };
+          console.log(`[Agent:${sessionId.slice(0, 8)}] ✅ COMPLETE: status = ${d.status}`);
+        } else if (event === "error") {
+          const d = data as { message: string };
+          console.error(`[Agent:${sessionId.slice(0, 8)}] ❌ ERROR: ${d.message}`);
+        }
+
         const sseRes = sseClients.get(sessionId);
         if (sseRes) sendSSE(sseRes, event, data);
       });

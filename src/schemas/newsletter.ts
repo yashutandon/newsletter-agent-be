@@ -14,9 +14,9 @@ export const ArticleSchema = z.object({
   title: z.string(),
   url: z.string().url(),
   source: z.string(),
-  publishedAt: z.string().optional(),
-  snippet: z.string().optional(),
-  fullText: z.string().optional(),
+  publishedAt: z.string().nullable().optional(),
+  snippet: z.string().nullable().optional(),
+  fullText: z.string().nullable().optional(),
 });
 export type Article = z.infer<typeof ArticleSchema>;
 
@@ -37,8 +37,8 @@ export const SelectedArticlesResponseSchema = z.object({
       title: z.string(),
       url: z.string(),
       source: z.string(),
-      publishedAt: z.string().optional(),
-      snippet: z.string().optional(),
+      publishedAt: z.string().nullable().optional(),
+      snippet: z.string().nullable().optional(),
       summary: z.string(),
       whyItMatters: z.string(),
       relevanceReason: z.string(),

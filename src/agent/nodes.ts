@@ -121,9 +121,12 @@ export async function summarizerNode(
   state: NewsletterState,
   config?: RunnableConfig
 ): Promise<Partial<NewsletterState>> {
+  // Limit to top 25 articles to avoid blowing past Groq's 8K free tier token limit
+  const candidates = state.searchResults.slice(0, 25);
+
   emit(config, "progress", {
     step: "summarizing",
-    message: `Evaluating ${state.searchResults.length} articles to find the top 5–7...`,
+    message: `Evaluating ${candidates.length} articles to find the top 5–7...`,
   });
 
   const criteria = state.plan?.criteria ?? ["recent", "relevant", "credible"];
@@ -134,7 +137,7 @@ export async function summarizerNode(
       { role: "system", content: SUMMARIZER_SYSTEM },
       {
         role: "user",
-        content: buildSummarizerUser(state.searchResults, criteria),
+        content: buildSummarizerUser(candidates, criteria),
       },
     ],
     SelectedArticlesResponseSchema,
@@ -190,7 +193,7 @@ export async function humanApproval1Node(
   });
 
   if (decision === "rejected") {
-    return { status: "rejected", errors: ["Stage 1 rejected by user — workflow stopped."] };
+    return { status: "rejected", errors: ["Stage 1 rejected by user -workflow stopped."] };
   }
 
   return { status: "writing" };
@@ -370,7 +373,7 @@ export async function humanApproval2Node(
   });
 
   if (decision === "rejected") {
-    return { status: "rejected", errors: ["Stage 2 rejected by user — output not generated."] };
+    return { status: "rejected", errors: ["Stage 2 rejected by user -output not generated."] };
   }
 
   return { status: "saving" };
